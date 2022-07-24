@@ -21,4 +21,4 @@
   ## Contributing
   Yussel Panecatl
   ## Questions
-  If you have any questions about this project, please contact me directly at ypanecatl24Gmail.com. You can view more of my projects at https://github.com/undefined. 
+  If you have any questions about this project, please contact me directly at ypanecatl24Gmail.com. You can view more of my projects at https://github.com/panecatl. 

@@ -121,7 +121,8 @@ showDepartments = () => {
 // function for roles
 showRoles = () => {
     console.log ('Showing all roles...\n');
-    const sql = `SELECT role.id, role.title, department.name AS department FROM role
+    const sql =`SELECT role.id, role.title, department.name AS department
+                FROM role
                 INNER JOIN department ON role.department_id = department.id`;
     
     connection.query(sql, (err, rows) => {
@@ -134,13 +135,17 @@ showRoles = () => {
 // show all employees
 showEmployees = () => {
     console.log('showing all employees..\n');
-    const sql = `SELECT employee.id, employee.first_name, employee.last_name, role.title,
-                department.name AS department, role.salary,
-                CONCAT (manager.first_name, " ", manager.last_name) AS manager
-                FROM employee
-                LEFT JOIN role ON employee.role_id = role.id
-                LEFT JOIN department ON role.department_id = department.id
-                LEFT JOIN employee manager ON employee.manager_id = manager.id`;
+    const sql = `SELECT employee.id, 
+    employee.first_name, 
+    employee.last_name, 
+    role.title, 
+    department.name AS department,
+    role.salary, 
+    CONCAT (manager.first_name, " ", manager.last_name) AS manager
+    FROM employee
+    LEFT JOIN role ON employee.role_id = role.id
+    LEFT JOIN department ON role.department_id = department.id
+    LEFT JOIN employee manager ON employee.manager_id = manager.id`;
 
     connection.query(sql, (err, rows) => {
         if (err) throw err;
@@ -168,7 +173,7 @@ addDepartment = () => {
     ])
     .then(answer => {
         const sql = `INSERT INTO department (name)
-                    VALUES (?)`;
+        VALUES (?)`;
         
         connection.query(sql, answer.addDept, (err, result) => {
             if (err) throw err;
@@ -213,7 +218,7 @@ addRole = () => {
         const params = [answer.role, answer.salary];
 
         // grabbing dept
-        const rolesql = `SELECT name, id FROM department`;
+        const rolesql = `SELECT name, id FROM department`; 
         connection.query(rolesql, (err, data) => {
             if (err) throw err;
             const dept = data.map (({ name, id }) => ({ name: name, value: id}));
@@ -231,7 +236,7 @@ addRole = () => {
                 params.push(dept);
 
                 const sql = `INSERT INTO role (title, salary, department_id)
-                            VALUES (?,?,?)`;
+                VALUES (?, ?, ?)`;
 
                 connection.query(sql, params, (err, result) => {
                     if (err) throw err;
